@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'});
+const readStream = fs.createReadStream(path.join(__dirname, 'access.log'));
 
 const app = express();
 const port = process.env.PORT;
@@ -12,7 +13,14 @@ const port = process.env.PORT;
 app.use(morgan('combined', {stream: accessLogStream}));
 
 app.get('/', (req, res) => {
-  res.send('Hello World');
+  let streamoutput = '';
+
+  readStream.on('data', (data) => {
+    streamoutput += data;
+  });
+  readStream.on('end', () => {
+    res.send(streamoutput);
+  });
 });
 
 app.listen(port, () => {console.log(`listening on port ${port}`)});
