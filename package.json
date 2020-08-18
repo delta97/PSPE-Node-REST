@@ -20,6 +20,9 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "openode": "^2.0.33"
+    "fs": "0.0.1-security",
+    "morgan": "^1.10.0",
+    "openode": "^2.0.33",
+    "path": "^0.12.7"
   }
 }
